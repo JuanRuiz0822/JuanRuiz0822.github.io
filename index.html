@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full scroll-smooth">
+<html lang="es" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
-        .carousel { max-width: 800px; margin: 0 auto; }
+        .section-enter-active { animation: fadeInUp 0.8s ease-out forwards; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .carousel img { max-height: 400px; object-fit: cover; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
@@ -18,230 +22,222 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-blue-950/50 to-slate-900 text-white h-full flex flex-col antialiased">
+<body class="bg-gradient-to-br from-slate-900 via-blue-950/50 to-slate-900 text-white min-h-screen">
 
-    <!-- HEADER CON NAV FUNCIONAL -->
-    <header class="p-8 md:p-12 text-center bg-slate-900/80 backdrop-blur-xl shadow-2xl border-b border-emerald-500/30 sticky top-0 z-50">
-        <!-- IMAGEN PERFIL -->
-        <div class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-8 rounded-full shadow-2xl border-4 border-emerald-500/50 overflow-hidden bg-gradient-to-br from-emerald-500/20 to-blue-500/20 ring-4 ring-emerald-400/20">
-            <img src="proyectos/perfil.jpg" 
-                 alt="Juan David Ruiz Anturi" 
-                 class="profile-perfect hover:scale-105 transition-all duration-500 hover:brightness-110 hover:ring-8 ring-emerald-400/30">
+    <!-- HEADER FIJO -->
+    <header class="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl shadow-2xl border-b border-emerald-500/30 z-50 p-4 md:p-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <!-- LOGO/PERFIL -->
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full shadow-xl border-3 border-emerald-500/50 overflow-hidden bg-gradient-to-br from-emerald-500/20 to-blue-500/20">
+                    <img src="proyectos/perfil.jpg" alt="Juan David Ruiz Anturi" class="profile-perfect">
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">Juan David Ruiz Anturi</h1>
+                    <p class="text-sm md:text-base text-emerald-400 font-semibold">Analista y Desarrollador Software</p>
+                </div>
+            </div>
+            
+            <!-- NAVEGACIÓN PRINCIPAL -->
+            <nav class="flex gap-2 md:gap-4">
+                <a href="#" onclick="showSection('sobre-mi')" class="px-4 py-2 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50">Sobre Mí</a>
+                <a href="#" onclick="showSection('habilidades')" class="px-4 py-2 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50">Habilidades</a>
+                <a href="#" onclick="showSection('proyectos')" class="px-4 py-2 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50">Proyectos</a>
+                <a href="#" onclick="showSection('cv')" class="px-4 py-2 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50">CV</a>
+                <a href="#" onclick="showSection('contacto')" class="px-4 py-2 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50">Contacto</a>
+            </nav>
         </div>
-        
-        <h1 class="text-3xl md:text-5xl lg:text-6xl font-black mb-4 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl tracking-tight">
-            Juan David Ruiz Anturi
-        </h1>
-        <p class="text-xl md:text-2xl mb-4 font-semibold text-emerald-400 tracking-wide">Analista y Desarrollador Software</p>
-        <p class="text-lg md:text-xl text-slate-300 mb-12 font-medium">Cali, Valle del Cauca, Colombia</p>
-        
-        <!-- NAVEGACIÓN CON SCROLL SUAVE -->
-        <nav class="flex flex-wrap justify-center gap-3 md:gap-4 text-lg max-w-4xl mx-auto">
-            <a href="#sobre-mi" class="px-6 py-3 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50 backdrop-blur-sm">
-                Sobre Mí
-            </a>
-            <a href="#habilidades" class="px-6 py-3 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50 backdrop-blur-sm">
-                Habilidades
-            </a>
-            <a href="#proyectos" class="px-6 py-3 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50 backdrop-blur-sm">
-                Proyectos
-            </a>
-            <a href="#cv" class="px-6 py-3 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50 backdrop-blur-sm">
-                CV
-            </a>
-            <a href="#contacto" class="px-6 py-3 rounded-xl font-semibold text-slate-200 hover:text-emerald-400 hover:bg-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 border border-slate-700/50 hover:border-emerald-400/50 backdrop-blur-sm">
-                Contacto
-            </a>
-        </nav>
     </header>
 
-    <!-- HEADER SECUNDARIO FIJO (Footer-like) -->
-    <div class="hidden md:block p-4 bg-slate-900/90 backdrop-blur-xl border-t border-emerald-500/30 sticky bottom-0 z-40">
-        <div class="max-w-6xl mx-auto flex justify-center gap-6 text-sm font-semibold text-slate-300">
-            <a href="#sobre-mi" class="hover:text-emerald-400 transition-colors p-2 rounded-lg hover:bg-emerald-500/10">Sobre Mí</a>
-            <a href="#habilidades" class="hover:text-emerald-400 transition-colors p-2 rounded-lg hover:bg-emerald-500/10">Habilidades</a>
-            <a href="#proyectos" class="hover:text-emerald-400 transition-colors p-2 rounded-lg hover:bg-emerald-500/10">Proyectos</a>
-            <a href="#cv" class="hover:text-emerald-400 transition-colors p-2 rounded-lg hover:bg-emerald-500/10">CV</a>
-            <a href="#contacto" class="hover:text-emerald-400 transition-colors p-2 rounded-lg hover:bg-emerald-500/10">Contacto</a>
-        </div>
-    </div>
-
-    <main class="flex-grow">
-        <!-- SOBRE MÍ -->
-        <section id="sobre-mi" class="py-24 px-6 md:px-12 max-w-5xl mx-auto scroll-mt-20">
-            <h2 class="text-4xl md:text-5xl font-black text-center mb-16 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-xl">
-                Sobre Mí
-            </h2>
-            <div class="max-w-3xl mx-auto text-xl md:text-2xl leading-relaxed text-slate-200 text-center">
-                <p class="mb-10 font-medium">Tecnólogo en <strong class="text-emerald-400">Análisis y Desarrollo de Software (SENA)</strong>. Especialista en <strong class="text-emerald-400">backend Python</strong> con experiencia profesional en:</p>
-                <ul class="text-left max-w-2xl mx-auto space-y-4 text-lg md:text-xl">
-                    <li class="flex items-start gap-3 p-4 bg-slate-800/50 rounded-xl border-l-4 border-emerald-500 hover:bg-emerald-500/5 transition-all backdrop-blur-sm"><span class="text-emerald-400 font-bold mt-1">✅</span> <strong>FastAPI & Streamlit</strong> - APIs IA y dashboards ML</li>
-                    <li class="flex items-start gap-3 p-4 bg-slate-800/50 rounded-xl border-l-4 border-emerald-500 hover:bg-emerald-500/5 transition-all backdrop-blur-sm"><span class="text-emerald-400 font-bold mt-1">✅</span> <strong>Python 3.13.5</strong> - Entornos Windows optimizados</li>
-                    <li class="flex items-start gap-3 p-4 bg-slate-800/50 rounded-xl border-l-4 border-emerald-500 hover:bg-emerald-500/5 transition-all backdrop-blur-sm"><span class="text-emerald-400 font-bold mt-1">✅</span> <strong>Hugging Face Transformers</strong> - Modelos pre-entrenados</li>
-                    <li class="flex items-start gap-3 p-4 bg-slate-800/50 rounded-xl border-l-4 border-emerald-500 hover:bg-emerald-500/5 transition-all backdrop-blur-sm"><span class="text-emerald-400 font-bold mt-1">✅</span> <strong>Google Drive/Sheets API</strong> - Integraciones cloud</li>
-                    <li class="flex items-start gap-3 p-4 bg-slate-800/50 rounded-xl border-l-4 border-emerald-500 hover:bg-emerald-500/5 transition-all backdrop-blur-sm"><span class="text-emerald-400 font-bold mt-1">✅</span> <strong>Git/GitHub</strong> - CI/CD profesional</li>
-                    <li class="flex items-start gap-3 p-4 bg-slate-800/50 rounded-xl border-l-4 border-emerald-500 hover:bg-emerald-500/5 transition-all backdrop-blur-sm"><span class="text-emerald-400 font-bold mt-1">✅</span> Competencias SENA: <strong>220501034-037</strong> (Propuesta TI → Implementación IA)</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- HABILIDADES -->
-        <section id="habilidades" class="py-24 px-6 md:px-12 bg-slate-900/40 backdrop-blur-sm scroll-mt-20">
-            <h2 class="text-4xl md:text-5xl font-black text-center mb-20 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-xl">
-                Habilidades Técnicas
-            </h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="text-center p-10 bg-slate-800/50 backdrop-blur-sm rounded-3xl hover:bg-emerald-500/10 hover:shadow-2xl hover:-translate-y-2 transition-all border border-slate-700 hover:border-emerald-500/50">
-                    <h3 class="text-3xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Backend IA/ML</h3>
-                    <div class="space-y-3 text-xl font-semibold text-slate-200">
-                        <div>Python 3.13.5</div>
-                        <div>FastAPI (async APIs predictivas)</div>
-                        <div>Streamlit</div>
-                        <div>Hugging Face Transformers</div>
-                        <div>TensorFlow</div>
-                    </div>
-                </div>
-                <div class="text-center p-10 bg-slate-800/50 backdrop-blur-sm rounded-3xl hover:bg-blue-500/10 hover:shadow-2xl hover:-translate-y-2 transition-all border border-slate-700 hover:border-blue-500/50">
-                    <h3 class="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Frontend</h3>
-                    <div class="space-y-3 text-xl font-semibold text-slate-200">
-                        <div>HTML5</div>
-                        <div>CSS3</div>
-                        <div>JavaScript</div>
-                        <div>Tailwind CSS</div>
-                    </div>
-                </div>
-                <div class="text-center p-10 bg-slate-800/50 backdrop-blur-sm rounded-3xl hover:bg-indigo-500/10 hover:shadow-2xl hover:-translate-y-2 transition-all border border-slate-700 hover:border-indigo-500/50">
-                    <h3 class="text-3xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Herramientas</h3>
-                    <div class="space-y-3 text-xl font-semibold text-slate-200">
-                        <div>Git/GitHub</div>
-                        <div>VS Code</div>
-                        <div>Docker</div>
-                        <div>Virtualenv</div>
-                        <div>Google APIs</div>
+    <!-- CONTENEDOR PRINCIPAL DE SECCIONES -->
+    <main class="pt-24 pb-12 px-4 md:px-8 max-w-6xl mx-auto">
+        
+        <!-- SECCIÓN SOBRE MÍ -->
+        <section id="sobre-mi" class="section-enter-active min-h-screen flex items-center py-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-5xl md:text-7xl font-black mb-12 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">Sobre Mí</h2>
+                <div class="text-xl md:text-2xl leading-relaxed text-slate-200 max-w-3xl mx-auto">
+                    <p class="mb-12 font-medium text-lg md:text-xl">Tecnólogo en <strong class="text-emerald-400 font-bold">Análisis y Desarrollo de Software (SENA)</strong>. Especialista en <strong class="text-emerald-400 font-bold">backend Python + IA/ML</strong> con experiencia profesional en:</p>
+                    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        <div class="space-y-4 text-left">
+                            <div class="flex items-start gap-4 p-6 bg-slate-800/50 rounded-2xl border-l-4 border-emerald-500 hover:bg-emerald-500/10 transition-all backdrop-blur-sm">
+                                <span class="text-emerald-400 font-bold text-2xl mt-1">✅</span>
+                                <div><strong>FastAPI & Streamlit</strong><br><span class="text-slate-400">APIs IA y dashboards ML</span></div>
+                            </div>
+                            <div class="flex items-start gap-4 p-6 bg-slate-800/50 rounded-2xl border-l-4 border-emerald-500 hover:bg-emerald-500/10 transition-all backdrop-blur-sm">
+                                <span class="text-emerald-400 font-bold text-2xl mt-1">✅</span>
+                                <div><strong>Python 3.13.5</strong><br><span class="text-slate-400">Entornos Windows optimizados</span></div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 text-left">
+                            <div class="flex items-start gap-4 p-6 bg-slate-800/50 rounded-2xl border-l-4 border-emerald-500 hover:bg-emerald-500/10 transition-all backdrop-blur-sm">
+                                <span class="text-emerald-400 font-bold text-2xl mt-1">✅</span>
+                                <div><strong>Hugging Face Transformers</strong><br><span class="text-slate-400">Modelos pre-entrenados</span></div>
+                            </div>
+                            <div class="flex items-start gap-4 p-6 bg-slate-800/50 rounded-2xl border-l-4 border-emerald-500 hover:bg-emerald-500/10 transition-all backdrop-blur-sm">
+                                <span class="text-emerald-400 font-bold text-2xl mt-1">✅</span>
+                                <div><strong>Competencias SENA</strong><br><span class="text-slate-400">220501034-037</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PROYECTOS -->
-        <section id="proyectos" class="py-24 px-6 md:px-12 scroll-mt-20">
-            <h2 class="text-4xl md:text-5xl font-black text-center mb-20 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-xl">
-                Proyectos Destacados
-            </h2>
-            
-            <!-- INVENTARIO -->
-            <div class="max-w-4xl mx-auto mb-16">
-                <div class="bg-slate-800/50 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-emerald-500/40 hover:border-emerald-400/60 transition-all">
+        <!-- SECCIÓN HABILIDADES -->
+        <section id="habilidades" class="section-enter-active hidden min-h-screen flex items-center py-20 bg-slate-900/40 backdrop-blur-sm">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-5xl md:text-7xl font-black text-center mb-20 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">Habilidades Técnicas</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="p-12 bg-slate-800/50 backdrop-blur-sm rounded-3xl hover:bg-emerald-500/10 hover:shadow-2xl hover:-translate-y-4 transition-all duration-500 border border-slate-700 hover:border-emerald-500/50 group">
+                        <h3 class="text-4xl font-black mb-8 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform">Backend IA/ML</h3>
+                        <div class="space-y-4 text-2xl font-semibold text-slate-200">
+                            <div>🐍 Python 3.13.5</div>
+                            <div>⚡ FastAPI</div>
+                            <div>📊 Streamlit</div>
+                            <div>🤖 Hugging Face</div>
+                            <div>🧠 TensorFlow</div>
+                        </div>
+                    </div>
+                    <div class="p-12 bg-slate-800/50 backdrop-blur-sm rounded-3xl hover:bg-blue-500/10 hover:shadow-2xl hover:-translate-y-4 transition-all duration-500 border border-slate-700 hover:border-blue-500/50 group">
+                        <h3 class="text-4xl font-black mb-8 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform">Frontend</h3>
+                        <div class="space-y-4 text-2xl font-semibold text-slate-200">
+                            <div>🌐 HTML5</div>
+                            <div>🎨 CSS3</div>
+                            <div>⚛️ JavaScript</div>
+                            <div>✨ Tailwind CSS</div>
+                        </div>
+                    </div>
+                    <div class="p-12 bg-slate-800/50 backdrop-blur-sm rounded-3xl hover:bg-indigo-500/10 hover:shadow-2xl hover:-translate-y-4 transition-all duration-500 border border-slate-700 hover:border-indigo-500/50 group">
+                        <h3 class="text-4xl font-black mb-8 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform">Herramientas</h3>
+                        <div class="space-y-4 text-2xl font-semibold text-slate-200">
+                            <div>🐙 Git/GitHub</div>
+                            <div>💻 VS Code</div>
+                            <div>🐳 Docker</div>
+                            <div>🛠️ Virtualenv</div>
+                            <div>☁️ Google APIs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PROYECTOS -->
+        <section id="proyectos" class="section-enter-active hidden min-h-screen flex flex-col justify-center py-20">
+            <div class="max-w-5xl mx-auto mb-20">
+                <h2 class="text-5xl md:text-7xl font-black text-center mb-20 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">Proyectos Destacados</h2>
+                
+                <!-- INVENTARIO -->
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-3xl p-12 mb-16 shadow-2xl border border-emerald-500/40 hover:border-emerald-400/60 transition-all group">
                     <div class="text-center mb-12">
-                        <h3 class="text-3xl md:text-4xl font-black mb-6 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent drop-shadow-xl">
-                            📦 Inventario de Activos
-                        </h3>
-                        <div class="inline-flex bg-emerald-500/20 border-2 border-emerald-500 px-8 py-4 rounded-2xl mb-8 backdrop-blur-sm">
-                            <span class="font-bold text-xl text-emerald-400 tracking-wide">100% OPTIMIZADO PYTHON 3.13.5</span>
-                        </div>
-                        <div class="flex flex-wrap gap-4 justify-center text-base text-emerald-400 font-semibold">
-                            <span>🧹 Limpieza Total</span>
-                            <span>⚙️ Windows Virtualenv</span>
-                            <span>📦 13+ Dependencias</span>
-                            <span>🔒 Variables Seguras</span>
+                        <h3 class="text-4xl md:text-6xl font-black mb-8 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent drop-shadow-xl group-hover:scale-105 transition-transform">📦 Inventario de Activos</h3>
+                        <div class="inline-flex bg-emerald-500/20 border-3 border-emerald-500 px-10 py-5 rounded-3xl mb-10 backdrop-blur-sm">
+                            <span class="font-black text-2xl text-emerald-400 tracking-wider">PYTHON 3.13.5</span>
                         </div>
                     </div>
-                    <div class="flex gap-4 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
-                        <img src="proyectos/inventario_activos.png" alt="Inventario 1" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-2xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-2 border-emerald-500/30">
-                        <img src="proyectos/inventario_activos2.png" alt="Inventario 2" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-2xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-2 border-emerald-500/30">
-                        <img src="proyectos/inventario_activos3.png" alt="Inventario 3" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-2xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-2 border-emerald-500/30">
-                        <img src="proyectos/inventario_activos4.png" alt="Inventario 4" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-2xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-2 border-emerald-500/30">
+                    <div class="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory max-w-4xl mx-auto">
+                        <img src="proyectos/inventario_activos.png" alt="Inventario 1" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-3xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-4 border-emerald-500/40 hover:border-emerald-400/60">
+                        <img src="proyectos/inventario_activos2.png" alt="Inventario 2" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-3xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-4 border-emerald-500/40 hover:border-emerald-400/60">
+                        <img src="proyectos/inventario_activos3.png" alt="Inventario 3" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-3xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-4 border-emerald-500/40 hover:border-emerald-400/60">
+                        <img src="proyectos/inventario_activos4.png" alt="Inventario 4" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-3xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-4 border-emerald-500/40 hover:border-emerald-400/60">
                     </div>
-                    <div class="text-center mt-12">
-                        <p class="text-xl mb-8 max-w-2xl mx-auto leading-relaxed text-slate-200">
-                            Sistema de gestión de inventario desarrollado con <strong class="text-emerald-400">FastAPI</strong> y <strong class="text-emerald-400">Python 3.13.5</strong>.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="https://github.com/JuanRuiz0822/Inventario" target="_blank" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 px-10 py-5 rounded-2xl font-bold text-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all">
-                                🚀 Ver en GitHub
-                            </a>
-                        </div>
+                    <div class="text-center mt-16">
+                        <a href="https://github.com/JuanRuiz0822/Inventario" target="_blank" class="inline-flex bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 px-16 py-8 rounded-3xl font-black text-2xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-3 transition-all border border-emerald-500/50">
+                            🚀 Ver en GitHub
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- MODELSIA -->
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-slate-800/50 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-indigo-500/40 hover:border-indigo-400/60 transition-all">
+                <!-- MODELSIA -->
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-indigo-500/40 hover:border-indigo-400/60 transition-all group">
                     <div class="text-center mb-12">
-                        <h3 class="text-3xl md:text-4xl font-black mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent drop-shadow-xl">
-                            🤖 MODELSIA
-                        </h3>
-                        <div class="inline-flex bg-indigo-500/20 border-2 border-indigo-500 px-8 py-4 rounded-2xl mb-8 backdrop-blur-sm">
-                            <span class="font-bold text-xl text-indigo-400 tracking-wide">100% OPTIMIZADO PYTHON 3.13.5</span>
-                        </div>
-                        <div class="flex flex-wrap gap-4 justify-center text-base text-indigo-400 font-semibold">
-                            <span>🧹 Limpieza Total</span>
-                            <span>⚙️ Windows Virtualenv</span>
-                            <span>📦 18+ Dependencias</span>
-                            <span>🔒 Variables Seguras</span>
+                        <h3 class="text-4xl md:text-6xl font-black mb-8 bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent drop-shadow-xl group-hover:scale-105 transition-transform">🤖 MODELSIA</h3>
+                        <div class="inline-flex bg-indigo-500/20 border-3 border-indigo-500 px-10 py-5 rounded-3xl mb-10 backdrop-blur-sm">
+                            <span class="font-black text-2xl text-indigo-400 tracking-wider">PYTHON 3.13.5</span>
                         </div>
                     </div>
-                    <div class="flex gap-4 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
-                        <img src="proyectos/modelsia1.png" alt="MODELSIA 1" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-2xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-2 border-indigo-500/30">
-                        <img src="proyectos/modelsia2.png" alt="MODELSIA 2" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-2xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-2 border-indigo-500/30">
+                    <div class="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory max-w-4xl mx-auto">
+                        <img src="proyectos/modelsia1.png" alt="MODELSIA 1" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-3xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-4 border-indigo-500/40 hover:border-indigo-400/60">
+                        <img src="proyectos/modelsia2.png" alt="MODELSIA 2" class="flex-shrink-0 w-80 h-64 md:w-96 md:h-72 rounded-3xl shadow-2xl snap-center hover:scale-105 transition-all cursor-pointer border-4 border-indigo-500/40 hover:border-indigo-400/60">
                     </div>
-                    <div class="text-center mt-12">
-                        <p class="text-xl mb-8 max-w-2xl mx-auto leading-relaxed text-slate-200">
-                            Sistema de gestión y despliegue de <strong class="text-indigo-400">modelos IA</strong> con <strong class="text-indigo-400">FastAPI + Streamlit</strong>. 
-                            Integración <strong class="text-indigo-400">Hugging Face Transformers</strong>, Docker support y monitoreo ML.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="https://github.com/JuanRuiz0822/MODELSIA" target="_blank" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 px-10 py-5 rounded-2xl font-bold text-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all">
-                                🚀 Ver en GitHub
-                            </a>
-                            <a href="#contacto" class="border-2 border-indigo-500 hover:bg-indigo-500 px-10 py-5 rounded-2xl font-bold text-xl transition-all hover:shadow-xl">
-                                💼 Contratarme
-                            </a>
-                        </div>
+                    <div class="text-center mt-16 space-y-6">
+                        <a href="https://github.com/JuanRuiz0822/MODELSIA" target="_blank" class="inline-flex bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 px-16 py-8 rounded-3xl font-black text-2xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-3 transition-all border border-indigo-500/50">
+                            🚀 Ver en GitHub
+                        </a>
+                        <a href="#contacto" onclick="showSection('contacto')" class="inline-flex border-3 border-indigo-500 hover:bg-indigo-500 px-16 py-8 rounded-3xl font-black text-2xl transition-all hover:shadow-xl">
+                            💼 Contratarme
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CV -->
-        <section id="cv" class="py-24 px-6 md:px-12 bg-slate-900/50 backdrop-blur-sm scroll-mt-20">
-            <h2 class="text-4xl md:text-5xl font-black text-center mb-16 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-xl">
-                Curriculum Vitae
-            </h2>
-            <div class="max-w-2xl mx-auto text-center">
-                <a href="Documentos/CV/CV-JuanRuiz.pdf" download class="inline-flex items-center gap-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 px-16 py-8 rounded-3xl font-bold text-2xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all border border-emerald-500/50">
-                    📥 Descargar CV Completo (PDF)
-                </a>
+        <!-- SECCIÓN CV -->
+        <section id="cv" class="section-enter-active hidden min-h-screen flex items-center justify-center py-20 bg-slate-900/50 backdrop-blur-sm">
+            <div class="text-center max-w-2xl mx-auto">
+                <h2 class="text-5xl md:text-7xl font-black mb-16 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">Curriculum Vitae</h2>
+                <div class="bg-slate-800/50 backdrop-blur-sm p-12 rounded-3xl border-4 border-emerald-500/40 hover:border-emerald-400/60 transition-all hover:shadow-2xl hover:scale-105">
+                    <a href="Documentos/CV/CV-JuanRuiz.pdf" download class="inline-flex items-center gap-6 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 px-20 py-12 rounded-3xl font-black text-3xl shadow-3xl hover:shadow-4xl transform hover:-translate-y-4 transition-all border-4 border-emerald-500/50 backdrop-blur-sm">
+                        📥 Descargar CV Completo (PDF)
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- CONTACTO -->
-        <section id="contacto" class="py-24 px-6 md:px-12 scroll-mt-20">
-            <h2 class="text-4xl md:text-5xl font-black text-center mb-16 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-xl">
-                Contáctame
-            </h2>
-            <div class="max-w-2xl mx-auto text-center space-y-8 text-xl">
-                <p class="text-2xl font-semibold text-slate-200"><strong>📍</strong> Cali, Valle del Cauca, Colombia</p>
-                <p class="text-2xl font-semibold text-slate-200"><strong>📧</strong> davidru11@hotmail.com</p>
-                <p class="text-2xl font-semibold text-slate-200"><strong>💼</strong> <a href="https://linkedin.com/in/juanruiz0822" class="text-blue-400 hover:text-blue-300 font-bold hover:underline">LinkedIn</a></p>
-                <p class="text-2xl font-semibold text-slate-200"><strong>🐙</strong> <a href="https://github.com/JuanRuiz0822" class="text-emerald-400 hover:text-emerald-300 font-bold hover:underline">GitHub</a></p>
+        <!-- SECCIÓN CONTACTO -->
+        <section id="contacto" class="section-enter-active hidden min-h-screen flex items-center py-20">
+            <div class="max-w-2xl mx-auto text-center space-y-12">
+                <h2 class="text-5xl md:text-7xl font-black mb-16 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">Contáctame</h2>
+                <div class="space-y-8 text-3xl md:text-4xl font-semibold text-slate-200">
+                    <div class="p-8 bg-slate-800/50 backdrop-blur-sm rounded-3xl border-2 border-emerald-500/30 hover:border-emerald-400/50 transition-all hover:shadow-xl">
+                        <p><strong>📍</strong> Cali, Valle del Cauca, Colombia</p>
+                    </div>
+                    <div class="p-8 bg-slate-800/50 backdrop-blur-sm rounded-3xl border-2 border-blue-500/30 hover:border-blue-400/50 transition-all hover:shadow-xl">
+                        <p><strong>📧</strong> davidru11@hotmail.com</p>
+                    </div>
+                    <div class="p-8 bg-slate-800/50 backdrop-blur-sm rounded-3xl border-2 border-blue-500/30 hover:border-blue-400/50 transition-all hover:shadow-xl">
+                        <p><strong>💼</strong> <a href="https://linkedin.com/in/juanruiz0822" target="_blank" class="text-blue-400 hover:text-blue-300 font-bold hover:underline">LinkedIn</a></p>
+                    </div>
+                    <div class="p-8 bg-slate-800/50 backdrop-blur-sm rounded-3xl border-2 border-emerald-500/30 hover:border-emerald-400/50 transition-all hover:shadow-xl">
+                        <p><strong>🐙</strong> <a href="https://github.com/JuanRuiz0822" target="_blank" class="text-emerald-400 hover:text-emerald-300 font-bold hover:underline">GitHub</a></p>
+                    </div>
+                </div>
             </div>
         </section>
+
     </main>
 
-    <!-- FOOTER -->
-    <footer class="p-8 md:p-12 text-center bg-slate-900/90 border-t-4 border-emerald-500/50 backdrop-blur-xl mt-auto">
-        <p class="text-xl md:text-2xl font-semibold mb-4 text-slate-200">© 2026 Juan David Ruiz Anturi</p>
-        <p class="text-emerald-400 font-bold text-xl md:text-2xl">Tecnólogo Análisis y Desarrollo Software - SENA Cali</p>
-        <div class="flex flex-wrap justify-center gap-6 mt-8 text-lg text-slate-400">
-            <a href="#sobre-mi" class="hover:text-emerald-400 font-semibold transition-all p-2 rounded-lg hover:bg-emerald-500/10">Sobre Mí</a>
-            <a href="#habilidades" class="hover:text-emerald-400 font-semibold transition-all p-2 rounded-lg hover:bg-emerald-500/10">Habilidades</a>
-            <a href="#proyectos" class="hover:text-emerald-400 font-semibold transition-all p-2 rounded-lg hover:bg-emerald-500/10">Proyectos</a>
-            <a href="#cv" class="hover:text-emerald-400 font-semibold transition-all p-2 rounded-lg hover:bg-emerald-500/10">CV</a>
-            <a href="#contacto" class="hover:text-emerald-400 font-semibold transition-all p-2 rounded-lg hover:bg-emerald-500/10">Contacto</a>
-        </div>
-    </footer>
+    <!-- SCRIPT PARA VISTA POR SECCIÓN -->
+    <script>
+        // Mostrar sección específica
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+                section.classList.remove('section-enter-active');
+            });
+            
+            // Mostrar y animar sección seleccionada
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.remove('hidden');
+            setTimeout(() => {
+                targetSection.classList.add('section-enter-active');
+            }, 100);
+            
+            // Actualizar active nav
+            document.querySelectorAll('nav a').forEach(link => link.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-400/50'));
+            event.target.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-400/50');
+            
+            // Scroll suave al top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mostrar "Sobre Mí" por defecto
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('sobre-mi');
+        });
+    </script>
 
 </body>
 </html>
